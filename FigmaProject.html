@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Architect Design</title>
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: #f5f5f5;
+            color: #222;
+            line-height: 1.5;
+        }
+
+        /* ===== Navbar ===== */
+        header {
+            background: #222;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 60px;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        .logo span {
+            color: #00aaff;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #ddd;
+            margin: 0 15px;
+            font-size: 0.95rem;
+            transition: color 0.3s;
+        }
+
+        nav a:hover,
+        nav a.active {
+            color: #00c26e;
+            font-weight: 600;
+        }
+
+        .search {
+            font-size: 1.2rem;
+            cursor: pointer;
+        }
+
+        /* ===== Hero Section ===== */
+        .hero {
+            background: url('header.jpg') center/cover no-repeat fixed;
+            height: 50vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            position: relative;
+        }
+
+        .hero::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.45);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            font-weight: 600;
+            margin-bottom: 25px;
+            letter-spacing: 1px;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+        }
+
+        .buttons a {
+            padding: 12px 25px;
+            border-radius: 5px;
+            font-weight: 500;
+            text-decoration: none;
+            color: white;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s, background 0.3s;
+        }
+
+        .btn-subscribe {
+            background: #00c26e;
+        }
+
+        .btn-subscribe:hover {
+            background: #00a05b;
+            transform: translateY(-3px);
+        }
+
+        .btn-articles {
+            background: #00aaff;
+        }
+
+        .btn-articles:hover {
+            background: #0088cc;
+            transform: translateY(-3px);
+        }
+
+        /* ===== Section Titles ===== */
+        section h2 {
+            font-size: 1.6rem;
+            color: #00aaff;
+            margin-bottom: 40px;
+            text-align: center;
+        }
+
+        /* ===== Featured Post Styling ===== */
+        .featured-post {
+            position: relative;
+            margin: 0 auto;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        /* Most Popular Post (tall image) */
+        .popular .featured-post img {
+            width: 100%;
+            height: auto;
+            object-fit: contain;
+            max-height: 1200px;
+            display: block;
+            border-radius: 8px;
+        }
+
+        /* Top Rated Post (wide image) */
+        .top-rated .featured-post img {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+            border-radius: 8px;
+            display: block;
+        }
+
+        /* Bottom huge image */
+        .bottom-image .featured-post img {
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+            border-radius: 8px;
+            display: block;
+            margin: 0 auto;
+            max-width: none;
+        }
+
+        /* Bottom header image */
+        .bottom-header {
+            width: 100vw; /* full viewport width */
+            margin: 0;
+            padding: 0;
+        }
+
+        .bottom-header img {
+            width: 100%;
+            height: 80px;
+            object-fit: cover;
+            display: block;
+        }
+
+        /* Overlay for text */
+        .overlay-content {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            color: white;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 15px 20px;
+            border-radius: 5px;
+            max-width: 90%;
+        }
+
+        /* ===== Clients Section ===== */
+        .clients {
+            background: url('Parallax.png') center/cover no-repeat fixed;
+            position: relative;
+            height: 50vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+        }
+
+        .clients::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.5);
+        }
+
+        .clients .overlay {
+            position: relative;
+            z-index: 1;
+        }
+
+        .clients .divider {
+            width: 50px;
+            height: 4px;
+            background: #00aaff;
+            margin: 0 auto 25px;
+            border-radius: 2px;
+        }
+
+        .client-logos {
+            display: flex;
+            gap: 40px;
+            justify-content: center;
+            flex-wrap: wrap;
+            align-items: center;
+            font-size: 1.2rem;
+            font-weight: 500;
+            text-transform: uppercase;
+        }
+
+        /* ===== Sections Padding ===== */
+        section {
+            padding: 80px 40px;
+        }
+
+        /* ===== Responsive ===== */
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                gap: 10px;
+                padding: 20px;
+            }
+
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+
+            .buttons {
+                flex-direction: column;
+            }
+
+            .popular .featured-post img {
+                max-height: 400px;
+            }
+
+            .top-rated .featured-post img {
+                height: 250px;
+            }
+
+            .bottom-image .featured-post img {
+                max-width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ===== Header ===== -->
+    <header>
+        <div class="logo">Architect <span>hover</span></div>
+        <nav>
+            <a href="#" class="active">HOME</a>
+            <a href="#">ARCHITECTURE DESIGN</a>
+            <a href="#">STRANGE BUILDINGS</a>
+            <a href="#">MAGAZINE</a>
+            <a href="#">BLOG</a>
+            <a href="#">NEWS</a>
+        </nav>
+        <div class="search">&#128269;</div>
+    </header>
+
+    <!-- ===== Hero Section ===== -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>THE LATEST NEWS ON DESIGN & ARCHITECTURE</h1>
+            <div class="buttons">
+                <a href="#" class="btn-subscribe">Subscribe Now</a>
+                <a href="#" class="btn-articles">Best Articles</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== Most Popular Post (Single Featured) ===== -->
+    <section class="popular featured">
+        <div class="featured-post">
+            <img src="Most popular posts list.png" alt="House">
+        </div>
+    </section>
+
+    <!-- ===== Clients Section (Text Labels) ===== -->
+    <section class="clients">
+        <div class="overlay">
+            <h2>OUR CLIENTS</h2>
+            <div class="divider"></div>
+            <div class="client-logos">
+                <span>National Post</span>
+                <span>Dryme</span>
+                <span>Canadian House&Home</span>
+                <span>Journy</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== Top Rated Post (Single Featured) ===== -->
+    <section class="top-rated featured">
+        <div class="featured-post">
+            <img src="latest-post-thumbnails.png" alt="Hotel">
+        </div>
+    </section>
+
+    <!-- ===== Bottom Huge Image ===== -->
+    <section class="bottom-image">
+        <div class="featured-post">
+            <img src="Most liked posts list.png" alt="Bottom Huge">
+        </div>
+    </section>
+
+    <!-- ===== Bottom Header Image ===== -->
+    <section class="bottom-header">
+        <img src="footer-with-copyright.png" alt="Bottom Header">
+    </section>
+
+</body>
+
+</html>
